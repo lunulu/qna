@@ -11,3 +11,10 @@ Style/Documentation:
   Enabled: false
 Layout/LineLength:
   Enabled: false
+
+RSpec/Capybara/FeatureMethods:
+  Enabled: false
+RSpec/ExampleLength:
+  Enabled: false
+RSpec/MultipleExpectations:
+  Enabled: false
