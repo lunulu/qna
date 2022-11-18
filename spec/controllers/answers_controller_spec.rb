@@ -2,18 +2,9 @@ require 'rails_helper'
 
 RSpec.describe AnswersController do
   let(:question) { create(:question) }
+  let(:user) { create(:user) }
 
-  describe 'GET #new' do
-    before { get :new, params: { question_id: question.id } }
-
-    it 'assigns new Answer to @answer' do
-      expect(assigns(:answer)).to be_a_new(Answer)
-    end
-
-    it 'renders new view' do
-      expect(response).to render_template :new
-    end
-  end
+  before { login(user) }
 
   describe 'POST #create' do
     context 'with valid attributes' do
@@ -24,7 +15,7 @@ RSpec.describe AnswersController do
       it 'redirects to show view' do
         post :create, params: { question_id: question.id, answer: attributes_for(:answer) }
 
-        expect(response).to redirect_to assigns(:answer)
+        expect(response).to redirect_to question
       end
     end
 
@@ -35,7 +26,7 @@ RSpec.describe AnswersController do
 
       it 're-renders new view' do
         post :create, params: { question_id: question.id, answer: attributes_for(:answer, :invalid) }
-        expect(response).to render_template :new
+        expect(response).to render_template 'questions/show'
       end
     end
   end

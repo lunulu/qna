@@ -5,3 +5,11 @@
 #
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
+
+10.times do |i|
+  question = Question.create(title: "Question#{i + 1}", body: 'text text text')
+
+  rand(0..3).times do |j|
+    question.answers.create(body: 'text ' * rand(1..4))
+  end
+end

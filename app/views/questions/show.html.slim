@@ -1,2 +1,10 @@
 h2= @question.title
 p= @question.body
+
+ul
+  - @question.answers.find_each do |answer|
+    li= answer.body
+
+p Create an answer
+== render 'shared/errors', resource: @answer
+== render 'answers/form'
