@@ -5,8 +5,8 @@ describe 'User can answer the question', "
   As an authenticated user
   I'd like to be able to write my answer on question's page
 " do
-  let(:question) { create(:question) }
   let(:user) { create(:user) }
+  let(:question) { create(:question) }
   let!(:answers) { create_list(:answer, 3, question: question) }
 
   describe 'User' do
