@@ -2,7 +2,7 @@ require 'rails_helper'
 
 RSpec.describe AnswersController do
   let(:user) { create(:user) }
-  let(:question) { create(:question) }
+  let(:question) { create(:question, user: user) }
 
   before { login(user) }
 
@@ -61,16 +61,30 @@ RSpec.describe AnswersController do
   end
 
   describe 'DELETE #destroy' do
-    before { login(user) }
-
     let!(:answer) { create(:answer, question: question, user: user) }
 
     it 'deletes the answer' do
-      expect { delete :destroy, params: { id: answer } }.to change(Answer, :count).by(-1)
+      expect { delete :destroy, params: { id: answer }, format: :js }.to change(Answer, :count).by(-1)
     end
 
-    it 'redirects to question show view' do
-      delete :destroy, params: { id: answer }
+    it 'renders destroy view' do
+      delete :destroy, params: { id: answer }, format: :js
+      expect(response).to render_template :destroy
+    end
+  end
+
+  describe 'POST #mark_as_best' do
+    let(:answer) { create(:answer, question: question, user: user) }
+
+    before { answer.mark_as_best }
+
+    it 'marks the answer as best' do
+      post :mark_as_best, params: { id: answer }
+      expect(question.best_answer).to eq answer
+    end
+
+    it "redirects to answer's question show view" do
+      post :mark_as_best, params: { id: answer }
       expect(response).to redirect_to question_path(question)
     end
   end

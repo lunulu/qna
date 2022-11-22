@@ -1,7 +1,7 @@
 class AnswersController < ApplicationController
   before_action :authenticate_user!
   before_action :load_question, only: %i[create]
-  before_action :load_answer, only: %i[update destroy]
+  before_action :load_answer, only: %i[update destroy mark_as_best]
 
   def create
     @answer = @question.answers.create(answer_params.to_h.merge(user: current_user))
@@ -14,7 +14,12 @@ class AnswersController < ApplicationController
 
   def destroy
     @answer.destroy if @answer.user == current_user
-    redirect_to question_path(@answer.question), notice: 'Your answer was successfully deleted.'
+    @question = @answer.question
+  end
+
+  def mark_as_best
+    @answer.mark_as_best if @answer.question.user == current_user
+    redirect_to question_path(@answer.question)
   end
 
   private

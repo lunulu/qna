@@ -6,10 +6,8 @@
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
 
-10.times do |i|
-  question = Question.create(title: "Question#{i + 1}", body: 'text text text')
+user = User.create(email: 'example@test.com', password: '123456')
 
-  rand(0..3).times do |j|
-    question.answers.create(body: 'text ' * rand(1..4))
-  end
+5.times do |i|
+  user.questions.create(title: "Question#{i + 1}", body: 'text text text')
 end
