@@ -18,7 +18,7 @@ describe 'User can create question', "
     it 'asks a question' do
       fill_in 'Title', with: 'Test question'
       fill_in 'Body', with: 'text text text'
-      click_on 'Ask'
+      click_on 'Save'
 
       expect(page).to have_content 'Your question successfully created.'
       expect(page).to have_content 'Test question'
@@ -26,7 +26,7 @@ describe 'User can create question', "
     end
 
     it 'asks a question with errors' do
-      click_on 'Ask'
+      click_on 'Save'
 
       expect(page).to have_content "Title can't be blank"
     end

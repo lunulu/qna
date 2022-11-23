@@ -1,7 +1,7 @@
-= form_with model: [@question, @answer], local: true do |form|
+= form_with model: [@question, @answer], class: 'new-answer', local: false do |form|
   p
     = form.label :body
-    = form.text_field :body
-
-  p
+    br
+    = form.text_area :body
+    br
     = form.submit 'Post your answer'

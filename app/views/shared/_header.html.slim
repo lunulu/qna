@@ -1,3 +1,5 @@
+p= link_to 'Qna', root_path
+
 - if current_user
   p= link_to 'Sign out', destroy_user_session_path, method: :delete
 - elsif %w[registrations sessions].exclude? controller_name

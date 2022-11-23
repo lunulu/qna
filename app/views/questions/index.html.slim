@@ -2,4 +2,4 @@ p= link_to 'Ask question', new_question_path
 
 ul
   - @questions.find_each do |question|
-    li= question.title
+    li= link_to question.title, question_path(question)

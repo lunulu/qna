@@ -1,15 +1,13 @@
 h2= @question.title
 p= @question.body
 - if @question.user == current_user
+  p= link_to 'Edit question', edit_question_path(@question)
   p= link_to 'Delete your question', question_path(@question), method: :delete
 
-p
-  - @question.answers.find_each do |answer|
-    p
-      = answer.body
-      - if answer.user == current_user
-        = link_to 'Delete your answer', answer_path(answer), method: :delete
+.answers
+  == render 'answers/best_answer', resource: @best_answer if @best_answer.present?
+  == render @answers
 
 p Create an answer
-== render 'shared/errors', resource: @answer
+.answer-errors
 == render 'answers/form'
