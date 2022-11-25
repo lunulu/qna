@@ -3,5 +3,11 @@
     = form.label :body
     br
     = form.text_area :body
+
+  p
+    = form.label :files
     br
+    = form.file_field :files, multiple: true
+
+  p
     = form.submit 'Post your answer'

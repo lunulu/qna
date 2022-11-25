@@ -26,6 +26,14 @@ describe 'User can edit question', "
       expect(page).to have_content 'edited body'
     end
 
+    it 'edits the question by attaching files' do
+      attach_file 'File', [Rails.root.join('spec/rails_helper.rb'), Rails.root.join('spec/spec_helper.rb')]
+      click_on 'Save'
+
+      expect(page).to have_link 'rails_helper.rb'
+      expect(page).to have_link 'spec_helper.rb'
+    end
+
     it 'edits the question with errors' do
       fill_in 'Title', with: ''
       click_on 'Save'

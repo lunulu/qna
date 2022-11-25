@@ -31,7 +31,7 @@ describe 'User can create question', "
       expect(page).to have_content "Title can't be blank"
     end
 
-    it 'asks a question with attached file' do
+    it 'asks a question with attached files' do
       fill_in 'Title', with: 'Test question'
       fill_in 'Body', with: 'text text text'
       attach_file 'File', [Rails.root.join('spec/rails_helper.rb'), Rails.root.join('spec/spec_helper.rb')]

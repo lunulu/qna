@@ -1,4 +1,13 @@
 p= answer.body
+
+- if answer.files.attached?
+  -  answer.files.each do |file|
+    p
+      = link_to file.filename.to_s, url_for(file)
+      '
+      - if current_user == answer.user
+        = link_to 'Delete file', answer_delete_file_path(id: answer.id, file_id: file.id), method: :delete
+
 - if current_user == @question.user
   = link_to 'Mark as best', mark_as_best_path(answer), method: :post
 
@@ -12,5 +21,9 @@ p= answer.body
     = f.label :body, 'Your answer'
     br
     = f.text_area :body
+    br
+    = f.label :files
+    br
+    = f.file_field :files, multiple: true
     br
     = f.submit 'Save'
