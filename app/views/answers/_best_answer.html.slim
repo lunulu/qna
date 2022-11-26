@@ -6,6 +6,12 @@
     - resource.files.each do |file|
       p= link_to file.filename.to_s, url_for(file)
 
+  - if resource.links.present?
+    .links
+      p Links:
+      ul
+        - resource.links.each do |link|
+          li = link_to link.name, link.url, target: '_blank'
 
   - if current_user == resource.user
     '
@@ -21,5 +27,15 @@
       = f.label :files
       br
       = f.file_field :files, multiple: true, direct_upload: true
+      br
+      p Links:
+      = f.fields_for :links do |l|
+        p
+          = l.label :name, 'Link name'
+          = l.text_field :name
+
+        p
+          = l.label :url
+          = l.text_field :url
       br
       = f.submit 'Save'

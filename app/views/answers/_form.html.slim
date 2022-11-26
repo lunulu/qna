@@ -1,13 +1,24 @@
-= form_with model: [@question, @answer], class: 'new-answer', local: false do |form|
+= form_with model: [@question, @answer], class: 'new-answer', local: false do |f|
   p
-    = form.label :body
+    = f.label :body
     br
-    = form.text_area :body
+    = f.text_area :body
 
   p
-    = form.label :files
+    = f.label :files
     br
-    = form.file_field :files, multiple: true, direct_upload: true
+    = f.file_field :files, multiple: true, direct_upload: true
+
+  p Links:
+  p
+    = f.fields_for :links do |l|
+      p
+        = l.label :name, 'Link name'
+        = l.text_field :name
+
+      p
+        = l.label :url
+        = l.text_field :url
 
   p
-    = form.submit 'Post your answer'
+    = f.submit 'Post your answer'

@@ -11,11 +11,19 @@ p= answer.body
 - if current_user == @question.user
   = link_to 'Mark as best', mark_as_best_path(answer), method: :post
 
+- if answer.links.present?
+  .links
+    p Links:
+    ul
+      - answer.links.each do |link|
+        li = link_to link.name, link.url, target: '_blank'
+
 - if current_user == answer.user
   '
   = link_to 'Edit', '#', class: 'edit-answer-link', data: { answer_id: answer.id }
   '
   = link_to 'Delete your answer', answer_path(answer), method: :delete, remote: true
+
 
   = form_with model: answer, local: false, class: 'hidden', html: { id: "edit-answer-#{answer.id}" } do |f|
     = f.label :body, 'Your answer'
@@ -25,5 +33,15 @@ p= answer.body
     = f.label :files
     br
     = f.file_field :files, multiple: true, direct_upload: true
+    br
+    p Links:
+    = f.fields_for :links do |l|
+      p
+        = l.label :name, 'Link name'
+        = l.text_field :name
+
+      p
+        = l.label :url
+        = l.text_field :url
     br
     = f.submit 'Save'

@@ -7,15 +7,21 @@ class QuestionsController < ApplicationController
 
   def show
     @answer = Answer.new
+    @answer.links.new
+    # TODO: can't add links to answer while edit
     @best_answer = @question.best_answer
     @answers = @question.answers.where.not(id: @best_answer)
   end
 
   def new
     @question = Question.new
+    @question.links.new
   end
 
-  def edit; end
+  def edit
+    # TODO: after update multiplies amount of links
+    @question.links.new
+  end
 
   def create
     @question = Question.new(question_params)
@@ -53,6 +59,6 @@ class QuestionsController < ApplicationController
   end
 
   def question_params
-    params.require(:question).permit(:title, :body, files: [])
+    params.require(:question).permit(:title, :body, files: [], links_attributes: %i[name url])
   end
 end

@@ -13,6 +13,13 @@ p= @question.body
   p= link_to 'Edit question', edit_question_path(@question)
   p= link_to 'Delete your question', question_path(@question), method: :delete
 
+- if @question.links.present?
+  .links
+    p Links:
+    ul
+      - @question.links.each do |link|
+        li = link_to link.name, link.url, target: '_blank'
+
 .answers
   == render 'answers/best_answer', resource: @best_answer if @best_answer.present?
   == render @answers
