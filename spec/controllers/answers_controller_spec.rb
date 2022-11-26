@@ -85,7 +85,20 @@ RSpec.describe AnswersController do
 
     it "redirects to answer's question show view" do
       post :mark_as_best, params: { id: answer }
-      expect(response).to redirect_to question_path(question)
+      expect(response).to redirect_to question
+    end
+  end
+
+  describe 'DELETE #delete_file' do
+    let(:answer) { create(:answer, :with_files, question: question, user: user) }
+
+    it 'deletes file attached to the answer' do
+      expect { delete :delete_file, params: { id: answer, file_id: answer.files.first.id } }.to change(answer.files, :count).by(-1)
+    end
+
+    it "redirects to the answer's question show view" do
+      delete :delete_file, params: { id: answer, file_id: answer.files.first.id }
+      expect(response).to redirect_to question
     end
   end
 end

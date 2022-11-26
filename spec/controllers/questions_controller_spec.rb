@@ -134,4 +134,19 @@ RSpec.describe QuestionsController do
       expect(response).to redirect_to questions_path
     end
   end
+
+  describe 'DELETE #delete_file' do
+    before { login(user) }
+
+    let!(:question) { create(:question, :with_files, user: user) }
+
+    it 'deletes file attached to the question' do
+      expect { delete :delete_file, params: { id: question, file_id: question.files.first.id } }.to change(question.files, :count).by(-1)
+    end
+
+    it 'redirects to the question show view' do
+      delete :delete_file, params: { id: question, file_id: question.files.first.id }
+      expect(response).to redirect_to question
+    end
+  end
 end

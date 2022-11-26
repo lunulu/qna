@@ -8,6 +8,10 @@ FactoryBot.define do
     question
     user
 
+    trait :with_files do
+      files { [Rack::Test::UploadedFile.new(Rails.root.join('spec/rails_helper.rb'))] }
+    end
+
     trait :invalid do
       body { nil }
     end

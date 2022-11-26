@@ -1,6 +1,6 @@
 class QuestionsController < ApplicationController
   before_action :authenticate_user!, except: %i[index show]
-  before_action :load_question, only: %i[show edit update destroy]
+  before_action :load_question, only: %i[show edit update destroy delete_file]
   def index
     @questions = Question.all
   end
@@ -41,13 +41,18 @@ class QuestionsController < ApplicationController
     redirect_to questions_path, notice: 'Your question was successfully deleted.'
   end
 
+  def delete_file
+    @question.delete_file(params[:file_id])
+    redirect_to @question
+  end
+
   private
 
   def load_question
-    @question = Question.find(params[:id])
+    @question = Question.with_attached_files.find(params[:id])
   end
 
   def question_params
-    params.require(:question).permit(:title, :body)
+    params.require(:question).permit(:title, :body, files: [])
   end
 end

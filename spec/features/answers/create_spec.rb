@@ -28,6 +28,17 @@ describe 'User can answer the question', "
       click_on 'Post your answer'
       expect(page).to have_content "Body can't be blank"
     end
+
+    it 'answers the question with attached files' do
+      fill_in 'Body', with: 'text text text'
+      attach_file 'File', [Rails.root.join('spec/rails_helper.rb'), Rails.root.join('spec/spec_helper.rb')]
+      click_on 'Post your answer'
+
+      within '.answers' do
+        expect(page).to have_link 'rails_helper.rb'
+        expect(page).to have_link 'spec_helper.rb'
+      end
+    end
   end
 
   it 'Unauthenticated user tries to answer the question' do
