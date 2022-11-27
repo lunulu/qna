@@ -1,27 +1,19 @@
 h2= @question.title
 p= @question.body
 
-- if @question.files.attached?
-  - @question.files.each do |file|
-    p
-      = link_to file.filename.to_s, url_for(file)
-      '
-      - if current_user == @question.user
-        = link_to 'Delete file', question_delete_file_path(id: @question.id, file_id: file.id), method: :delete
+== render 'shared/files/show', resource: @question
+
+== render 'shared/links/show', resource: @question
 
 - if @question.user == current_user
-  p= link_to 'Edit question', edit_question_path(@question)
-  p= link_to 'Delete your question', question_path(@question), method: :delete
+  = link_to 'Edit question', edit_question_path(@question)
+  '
+  = link_to 'Delete your question', question_path(@question), method: :delete
 
-- if @question.links.present?
-  .links
-    p Links:
-    ul
-      - @question.links.each do |link|
-        li = link_to link.name, link.url, target: '_blank'
+p= '-' * 25
 
 .answers
-  == render 'answers/best_answer', resource: @best_answer if @best_answer.present?
+  == render 'answers/best_answer', answer: @best_answer if @best_answer.present?
   == render @answers
 
 p Create an answer

@@ -1,1 +1,1 @@
-$('.answers').html('<%= j render @question.answers %>');
+$('.answers').html('<%= j render 'answers/best_answer', answer: @best_answer if @best_answer.present? && !@best_answer.destroyed? %>' + '<%= j render @answers %>');

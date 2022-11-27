@@ -9,12 +9,12 @@ class AnswersController < ApplicationController
 
   def update
     @answer.update(answer_params)
-    @question = @answer.question
+    prepare_question_and_answers
   end
 
   def destroy
     @answer.destroy if @answer.user == current_user
-    @question = @answer.question
+    prepare_question_and_answers
   end
 
   def mark_as_best
@@ -35,6 +35,12 @@ class AnswersController < ApplicationController
 
   def load_answer
     @answer = Answer.with_attached_files.find(params[:id])
+  end
+
+  def prepare_question_and_answers
+    @question = @answer.question
+    @best_answer = @question.best_answer
+    @answers = @question.answers.where.not(id: @best_answer)
   end
 
   def answer_params

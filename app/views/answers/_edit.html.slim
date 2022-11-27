@@ -1,0 +1,11 @@
+= form_with model: resource, local: false, class: 'hidden', html: { id: "edit-answer-#{resource.id}" } do |f|
+  p
+    = f.label :body, 'Your answer'
+    br
+    = f.text_area :body
+
+  == render 'shared/files/form', f: f
+
+  == render 'shared/links/form', f: f
+
+  p= f.submit 'Save'
