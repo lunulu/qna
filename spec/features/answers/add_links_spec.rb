@@ -6,22 +6,27 @@ describe 'User can add links to answer', "
   I'd like to be able to add links
 " do
   let(:user) { create(:user) }
-  let(:gist_url) { 'https://gist.github.com/lunulu/142d82aaa6647f3ec5adab8e00aa0bf6' }
-  let(:question) { create(:question) }
+  let(:url) { 'https://vk.com' }
+  let(:question) { create(:question, user: user) }
 
-  it 'User adds link when asks answer', js: true do
-    sign_in(user)
-    visit question_path(question)
+  describe 'User' do
+    before do
+      sign_in(user)
+      visit question_path(question)
+    end
 
-    fill_in 'Body', with: 'text text text'
+    it 'adds link when asks answer', js: true do
+      fill_in 'Body', with: 'text text text'
 
-    fill_in 'Link name', with: 'My gist'
-    fill_in 'Url', with: gist_url
+      click_on 'Add link'
+      fill_in 'Link name', with: 'My gist'
+      fill_in 'Url', with: url
 
-    click_on 'Post your answer'
+      click_on 'Post your answer'
 
-    within '.answers' do
-      expect(page).to have_link 'My gist', href: gist_url
+      within '.answers' do
+        expect(page).to have_link 'My gist', href: url
+      end
     end
   end
 end
