@@ -40,6 +40,20 @@ describe 'User can create question', "
       expect(page).to have_link 'rails_helper.rb'
       expect(page).to have_link 'spec_helper.rb'
     end
+
+    it 'asks a question with reward' do
+      fill_in 'Title', with: 'Test question'
+      fill_in 'Body', with: 'text text text'
+
+      within '.reward' do
+        fill_in 'Reward title', with: 'Reward name'
+        attach_file 'Image', Rails.root.join('app/assets/images/thinknetica.png')
+      end
+
+      click_on 'Save'
+
+      expect(page).to have_content 'Reward name'
+    end
   end
 
   it 'Unauthenticated user tries to ask a question' do

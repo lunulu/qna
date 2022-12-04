@@ -1,0 +1,7 @@
+h2 My rewards
+
+- @rewards.each do |reward|
+  = '*' * 25
+  p= "Question: #{reward.question.title}"
+  p= reward.title
+  p= image_tag reward.image, style: 'max-width: 200px; max-height: 200px'

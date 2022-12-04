@@ -6,4 +6,5 @@ class User < ApplicationRecord
 
   has_many :questions, dependent: nil
   has_many :answers, dependent: nil
+  has_many :rewards, dependent: nil
 end

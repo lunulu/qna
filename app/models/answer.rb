@@ -10,7 +10,8 @@ class Answer < ApplicationRecord
   validates :body, presence: true
 
   def mark_as_best
-    question.update(answer_id: id)
+    question.update(best_answer: self)
+    question.reward.update(user: user) if question.reward.present?
   end
 
   def delete_file(file_id)

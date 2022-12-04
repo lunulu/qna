@@ -5,6 +5,8 @@ p= @question.body
 
 == render 'shared/links/show', resource: @question
 
+== render 'shared/reward/show', resource: @question
+
 - if @question.user == current_user
   = link_to 'Edit question', edit_question_path(@question)
   '
