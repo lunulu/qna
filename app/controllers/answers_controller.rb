@@ -34,13 +34,13 @@ class AnswersController < ApplicationController
   end
 
   def load_answer
-    @answer = Answer.with_attached_files.find(params[:id])
+    @answer = Answer.with_attached_files.preload(:question).find(params[:id])
   end
 
   def prepare_question_and_answers
-    @question = @answer.question
+    @question = Question.preload(:best_answer, :answers).find(@answer.question.id)
     @best_answer = @question.best_answer
-    @answers = @question.answers.where.not(id: @best_answer)
+    @answers = @question.answers.reject { |answer| answer == @best_answer }
   end
 
   def answer_params
