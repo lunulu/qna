@@ -1,0 +1,9 @@
+- if resource.files.attached?
+  .files
+    p Files:
+    - resource.files.each do |file|
+      = link_to file.filename.to_s, url_for(file)
+      '
+      - if current_user == resource.user
+        = link_to 'Delete file', send("#{resource.class.name.downcase}_delete_file_path", id: resource.id, file_id: file.id), method: :delete
+      br

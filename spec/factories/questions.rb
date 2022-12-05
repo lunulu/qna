@@ -12,6 +12,10 @@ FactoryBot.define do
       files { [Rack::Test::UploadedFile.new(Rails.root.join('spec/rails_helper.rb'))] }
     end
 
+    trait :with_reward do
+      reward
+    end
+
     trait :invalid do
       title { nil }
     end

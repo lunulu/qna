@@ -74,6 +74,7 @@ RSpec.describe AnswersController do
   end
 
   describe 'POST #mark_as_best' do
+    let(:question_with_reward) { create(:question, :with_reward) }
     let(:answer) { create(:answer, question: question, user: user) }
 
     before { answer.mark_as_best }

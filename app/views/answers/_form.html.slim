@@ -1,13 +1,11 @@
-= form_with model: [@question, @answer], class: 'new-answer', local: false do |form|
+= form_with model: [@question, @answer], class: 'new-answer', local: false do |f|
   p
-    = form.label :body
+    = f.label :body
     br
-    = form.text_area :body
+    = f.text_area :body
 
-  p
-    = form.label :files
-    br
-    = form.file_field :files, multiple: true, direct_upload: true
+  == render 'shared/files/form', f: f
 
-  p
-    = form.submit 'Post your answer'
+  == render 'shared/links/form', f: f
+
+  p= f.submit 'Post your answer', id: 'new-answer-submit'

@@ -9,12 +9,12 @@ class AnswersController < ApplicationController
 
   def update
     @answer.update(answer_params)
-    @question = @answer.question
+    prepare_question_and_answers
   end
 
   def destroy
     @answer.destroy if @answer.user == current_user
-    @question = @answer.question
+    prepare_question_and_answers
   end
 
   def mark_as_best
@@ -34,10 +34,16 @@ class AnswersController < ApplicationController
   end
 
   def load_answer
-    @answer = Answer.with_attached_files.find(params[:id])
+    @answer = Answer.with_attached_files.preload(:question).find(params[:id])
+  end
+
+  def prepare_question_and_answers
+    @question = Question.preload(:best_answer, :answers).find(@answer.question.id)
+    @best_answer = @question.best_answer
+    @answers = @question.answers.reject { |answer| answer == @best_answer }
   end
 
   def answer_params
-    params.require(:answer).permit(:body, files: [])
+    params.require(:answer).permit(:body, files: [], links_attributes: %i[id name url _destroy])
   end
 end

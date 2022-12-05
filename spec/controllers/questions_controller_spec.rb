@@ -25,17 +25,27 @@ RSpec.describe QuestionsController do
       expect(assigns(:question)).to eq question
     end
 
+    it 'assigns new answer for question' do
+      expect(assigns(:answer)).to be_a_new(Answer)
+    end
+
     it 'renders show view' do
       expect(response).to render_template :show
     end
   end
 
   describe 'GET #new' do
-    before { login(user) }
-    before { get :new }
+    before do
+      login(user)
+      get :new
+    end
 
     it 'assigns new Question to @question' do
       expect(assigns(:question)).to be_a_new(Question)
+    end
+
+    it 'assigns new Reward' do
+      expect(assigns(:question).reward).to be_a_new(Reward)
     end
 
     it 'renders new view' do
@@ -49,6 +59,10 @@ RSpec.describe QuestionsController do
 
     it 'assigns the requested question to @question' do
       expect(assigns(:question)).to eq question
+    end
+
+    it 'assigns new Reward' do
+      expect(assigns(:question).reward).to be_a_new(Reward)
     end
 
     it 'renders edit view' do

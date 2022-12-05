@@ -1,15 +1,18 @@
-= form_with model: @question do |form|
+= form_with model: @question do |f|
   p
-    = form.label :title
-    = form.text_field :title
+    = f.label :title
+    br
+    = f.text_field :title
 
   p
-    = form.label :body
-    = form.text_area :body
+    = f.label :body
+    br
+    = f.text_area :body
 
-  p
-    = form.label :files
-    = form.file_field :files, multiple: true, direct_upload: true
+  == render 'shared/files/form', f: f
 
-  p
-    = form.submit 'Save'
+  == render 'shared/links/form', f: f
+
+  == render 'shared/reward/form', f: f
+
+  p= f.submit 'Save'
